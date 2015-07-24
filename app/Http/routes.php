@@ -14,3 +14,24 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Front
+
+
+
+//Back
+Route::group(['prefix' => 'mapback', 'middleware' => 'auth.basic'], function () {
+    
+    // Matches The "/mapback/map" URL
+    Route::resource('map', 'MapController');
+});
+
+
+//Api
+Route::group(['prefix' => 'api', 'middleware' => 'ApiAuth'], function () {
+    
+    // Matches The "/api/map" URL
+    Route::get('map/findall', 'MapController@findall');
+    Route::resource('map', 'MapController');
+    
+});
