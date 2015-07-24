@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMapsLocationTable extends Migration
+class CreateMapLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class CreateMapsLocationTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('maps_location')) {
-            Schema::create('maps_location', function (Blueprint $table) {
+        if (!Schema::hasTable('map_locations')) {
+            Schema::create('map_locations', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('location', 50);
                 $table->string('country', 30);
@@ -29,6 +29,6 @@ class CreateMapsLocationTable extends Migration
      */
     public function down()
     {
-        Schema::drop('maps_location');
+        Schema::drop('map_locations');
     }
 }

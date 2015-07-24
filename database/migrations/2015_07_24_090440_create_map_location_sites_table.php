@@ -15,10 +15,10 @@ class CreateMapLocationSitesTable extends Migration
         if (!Schema::hasTable('map_location_sites')) {
             Schema::create('map_location_sites', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('location_id');
+                $table->integer('location_id')->unsigned();
                 $table->string('name', 50);
-                $table->float('lat');
-                $table->float('lng');
+                $table->decimal('lat', 9, 6);
+                $table->decimal('lng', 9, 6);
                 $table->string('deepth', 50);
                 $table->string('temperature', 50);
                 $table->string('season');
@@ -26,6 +26,9 @@ class CreateMapLocationSitesTable extends Migration
                 $table->text('description');
                 $table->text('properties');
                 $table->timestamps();
+            });
+            Schema::table('map_location_sites', function (Blueprint $table) {
+                $table->foreign('location_id')->references('id')->on('map_locations');
             });
         }
     }
