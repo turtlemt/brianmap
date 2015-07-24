@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateMapsLocationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('password_resets')) {
-            Schema::create('users', function (Blueprint $table) {
+        if (!Schema::hasTable('maps_location')) {
+            Schema::create('maps_location', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->string('password', 60);
-                $table->rememberToken();
+                $table->string('location', 50);
+                $table->string('country', 30);
                 $table->timestamps();
             });
         }
@@ -31,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('maps_location');
     }
 }
