@@ -26,3 +26,8 @@ Add middleware
         
         
 php artisan make:model Http/Models/MapLocations
+
+
+設定自己的config
+    App\Providers\AppServiceProvider.php
+    mergeConfigFrom 加入新增的config檔案

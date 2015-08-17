@@ -19,10 +19,7 @@ class MapController extends Controller
      */
     public function findall()
     {
-        //
-        echo 'findall';
         $mapLocationSite = new MapLocationSite();
-        $output = array();
         $mapLocation = new MapLocation();
         /*$allSites = $mapLocationSite::all();
         foreach ($allSites as $site) {
@@ -30,11 +27,12 @@ class MapController extends Controller
         }*/
         
         $locations = $mapLocation::all();
-        foreach ($locations as $location) {
+        /*foreach ($locations as $location) {
+            //$location->mapLocationSite;
             $location->mapLocationSite;
-        }
-        $output = $locations->toJson();
-        var_dump($output);
+        }*/
+        //$output = $locations->toJson();
+        return view('map.all', ['locations' => $locations, 'googleapikey' => config('siteconfig.googleapiKey')]);
     }
     
     /**

@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 //Front
+Route::get('map/findall', 'MapController@findall');
+Route::resource('map', 'MapController');
 
 
 
@@ -28,10 +30,10 @@ Route::group(['prefix' => 'mapback', 'middleware' => 'auth.basic'], function () 
 
 
 //Api
-Route::group(['prefix' => 'api', 'middleware' => 'ApiAuth'], function () {
+/*Route::group(['prefix' => 'api', 'middleware' => 'ApiAuth'], function () {
     
     // Matches The "/api/map" URL
     Route::get('map/findall', 'MapController@findall');
     Route::resource('map', 'MapController');
     
-});
+});*/

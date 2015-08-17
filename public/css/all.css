@@ -1,0 +1,7 @@
+.title-container { text-align: center }
+
+.title-container .logo a {
+    font: bold 39px Roboto;
+    color: #51545C;
+    letter-spacing: -.03em;
+}
