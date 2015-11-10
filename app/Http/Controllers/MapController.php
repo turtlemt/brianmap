@@ -6,12 +6,20 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Menu;
 
 use App\Http\Models\MapLocationSite;
 use App\Http\Models\MapLocation;
 
 class MapController extends Controller
 {
+    protected $navMenu = '';
+    
+    public function __construct()
+    {
+        $this->navMenu = Menu::getMenu();
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +40,7 @@ class MapController extends Controller
             $location->mapLocationSite;
         }*/
         //$output = $locations->toJson();
-        return view('map.all', ['locations' => $locations, 'googleapikey' => config('siteconfig.googleapiKey')]);
+        return view('map.all', ['menu' => $this->navMenu, 'locations' => $locations, 'googleapikey' => config('siteconfig.googleapiKey')]);
     }
     
     /**
@@ -51,9 +59,12 @@ class MapController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function createSite()
     {
-        //
+        $mapLocationSite = new MapLocationSite();
+        $mapLocation = new MapLocation();
+        $locations = $mapLocation::all();
+        return view('map.siteedit', ['site' => $mapLocationSite, 'locations' => $locations]);
     }
 
     /**

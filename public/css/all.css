@@ -1,4 +1,8 @@
-.title-container { text-align: center }
+.title-container { 
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 .title-container .logo a {
     font: bold 39px Roboto;

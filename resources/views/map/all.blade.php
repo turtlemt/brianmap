@@ -7,7 +7,7 @@
 </script>
 
 <div class="row">
-    <div class="col-md-12 text-center">title</div>
+    <div class="col-md-12 text-center"></div>
     <div class="col-md-12">
         <div id="map_canvas" style="width:100%; height:500px"></div>
         <script type="text/javascript">
