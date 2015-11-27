@@ -47,7 +47,7 @@
                             var marker = new google.maps.Marker({
                             position: new google.maps.LatLng(<?php echo $site->lat;?>, <?php echo $site->lng;?>), map: map, title: '<?php echo $site->name;?>' });  
                             marker.addListener('click', function() {
-                                window.location = "/map/engname";
+                                window.location = "/map/site/<?php echo $site->id;?>";
                             });
                         <?php endforeach;?>
                    

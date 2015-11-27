@@ -1,5 +1,7 @@
 @extends('layout.template')
-@section('title', 'Edit dive site')
+@section('title')
+{{$title}}
+@stop
 
 @section('content')
 <div class="alert alert-<?php echo $error['type'];?>" role="alert"><?php echo $error['message'];?></div>
@@ -11,9 +13,9 @@
                 <div class="col-md-7  grid-row-buffer">
                     <label for="name">Location: </label>
                     <select class="form-control" name="locationid">
-                        <?php 
+                        <?php
                         foreach ($locations as $location) {
-                            if ($site->locationId == $location->id) {
+                            if ($site->location_id == $location->id) {
                                 $selected = 'selected';
                             } else {
                                 $selected = '';

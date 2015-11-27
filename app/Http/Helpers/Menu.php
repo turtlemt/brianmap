@@ -10,9 +10,10 @@ class Menu
                                          'action' => 'findall', 
                                          'title' => 'Map', 
                                          'link' => '/map/findall', 
-                                         'subtitle' => array(array('title' => 'All Sites', 'link' =>'/map/findall'),
-                                                             array('title' => 'Create Site', 'link' =>'/map/createsite'),
-                                                             array('title' => 'Edit Site', 'link' =>'/map/editsite'),
+                                         'subtitle' => array(array('title' => 'All Sites', 'action' => 'findall', 'link' =>'/map/findall'),
+                                                             array('title' => 'Create Site', 'action' => 'createsite', 'link' =>'/map/createsite'),
+                                                             array('title' => 'Edit Site', 'action' => 'editsite', 'link' =>'/map/editsite'),
+                                                             array('title' => 'Site', 'action' => 'site', 'link' =>'/map/site'),
                                                             ), 
                                          'focus' => false),
                                    array('controller' => 'SiteController', 
@@ -21,6 +22,8 @@ class Menu
                                          'link' => '/site/index', 
                                          'focus' => false),
                                    );
+    
+    protected static $title = '';
     /**
      * Get controller and action
      *
@@ -43,10 +46,25 @@ class Menu
     {
         $segment = self::processAction();
         foreach (self::$menu as $key => $element) {
-            if ($element['controller'] == $segment[0] && $element['action'] == $segment[1]) {
-                self::$menu[$key]['focus'] = true;
+            if ($element['controller'] == $segment[0] ) {
+                foreach ($element['subtitle'] as $subtitle) {
+                    if ($subtitle['action'] == strtolower($segment[1])) {
+                        self::$menu[$key]['focus'] = true;
+                        self::$title = $subtitle['title'];
+                    }
+                }
             }
         }
         return self::$menu;
+    }
+    
+    /**
+     * Get menu with focus status
+     *
+     * @var array
+     */
+    public static function getTitle()
+    {
+        return self::$title;
     }
 }

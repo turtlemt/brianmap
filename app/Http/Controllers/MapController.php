@@ -15,10 +15,12 @@ use App\Http\Models\MapLocation;
 class MapController extends Controller
 {
     protected $navMenu = '';
+    protected $title = '';
     
     public function __construct()
     {
         $this->navMenu = Menu::getMenu();
+        $this->title = Menu::getTitle();
     }
     
     /**
@@ -79,6 +81,7 @@ class MapController extends Controller
         $locations = $mapLocation::all();
         $error = Session::get('error');
         return view('map.siteedit', ['menu' => $this->navMenu, 
+                                     'title' => $this->title,
                                      'site' => $mapLocationSite, 
                                      'locations' => $locations,
                                      'error' => $error]);
@@ -90,30 +93,21 @@ class MapController extends Controller
      * @param  $name (from router)
      * @return view
      */
-    public function site($name)
+    public function site($id)
     {
-        $mapLocationSite = MapLocationSite::where('id', $name)->get();
+        $mapLocationSite = MapLocationSite::where('id', $id)->first();
         if (count($mapLocationSite) == 0) {
-            return redirect('map/createsite')->with('error', array('type' => 'danger', 'message' => 'Can\'t found this dive site.'));
+            return redirect('map/findall')->with('error', array('type' => 'danger', 'message' => 'Can\'t found this dive site.'));
         }
         $mapLocation = new MapLocation();
-        if ($request->isMethod('post')) {
-            $mapLocationSite->location_id = $request->input('locationid');
-            $mapLocationSite->name = $request->input('name');
-            $mapLocationSite->lat = $request->input('lat');
-            $mapLocationSite->lng = $request->input('lng');
-            $mapLocationSite->image = $request->input('image');
-            $mapLocationSite->video = $request->input('video');
-            $mapLocationSite->description = $request->input('description');
-            $mapLocationSite->save();
-        }
-        
-        $locations = $mapLocation::all();
+        $location = $mapLocation::where('id', $mapLocationSite->location_id)->first();
         $error = Session::get('error');
-        return view('map.siteedit', ['menu' => $this->navMenu, 
-                                     'site' => $mapLocationSite, 
-                                     'locations' => $locations,
-                                     'error' => $error]);
+        return view('map.site', ['menu' => $this->navMenu, 
+                                 'title' => $this->title,
+                                 'googleapikey' => config('siteconfig.googleapiKey'),
+                                 'site' => $mapLocationSite, 
+                                 'location' => $location,
+                                 'error' => $error]);
     }
 
     /**
@@ -133,9 +127,9 @@ class MapController extends Controller
      * @param  Request  $request
      * @return view
      */
-    public function editSite(Request $request)
+    public function editSite(Request $request, $id)
     {
-        $mapLocationSite = MapLocationSite::where('id', $request->input('id'))->get();
+        $mapLocationSite = MapLocationSite::where('id', $id)->first();
         if (count($mapLocationSite) == 0) {
             return redirect('map/createsite')->with('error', array('type' => 'danger', 'message' => 'Can\'t found this dive site.'));
         }
@@ -154,6 +148,7 @@ class MapController extends Controller
         $locations = $mapLocation::all();
         $error = Session::get('error');
         return view('map.siteedit', ['menu' => $this->navMenu, 
+                                     'title' => $this->title,
                                      'site' => $mapLocationSite, 
                                      'locations' => $locations,
                                      'error' => $error]);
