@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\Menu;
+use Session;
 
 use App\Http\Models\MapLocationSite;
 use App\Http\Models\MapLocation;
@@ -57,26 +58,62 @@ class MapController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @param  Request  $request
+     * @return view
      */
-    public function createSite()
+    public function createSite(Request $request)
     {
         $mapLocationSite = new MapLocationSite();
         $mapLocation = new MapLocation();
+        if ($request->isMethod('post')) {
+            $mapLocationSite->location_id = $request->input('locationid');
+            $mapLocationSite->name = $request->input('name');
+            $mapLocationSite->lat = $request->input('lat');
+            $mapLocationSite->lng = $request->input('lng');
+            $mapLocationSite->image = $request->input('image');
+            $mapLocationSite->video = $request->input('video');
+            $mapLocationSite->description = $request->input('description');
+            $mapLocationSite->save();
+        }
+        
         $locations = $mapLocation::all();
-        return view('map.siteedit', ['site' => $mapLocationSite, 'locations' => $locations]);
+        $error = Session::get('error');
+        return view('map.siteedit', ['menu' => $this->navMenu, 
+                                     'site' => $mapLocationSite, 
+                                     'locations' => $locations,
+                                     'error' => $error]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show site detail
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  $name (from router)
+     * @return view
      */
-    public function store(Request $request)
+    public function site($name)
     {
-        //
-        echo 'store';
+        $mapLocationSite = MapLocationSite::where('id', $name)->get();
+        if (count($mapLocationSite) == 0) {
+            return redirect('map/createsite')->with('error', array('type' => 'danger', 'message' => 'Can\'t found this dive site.'));
+        }
+        $mapLocation = new MapLocation();
+        if ($request->isMethod('post')) {
+            $mapLocationSite->location_id = $request->input('locationid');
+            $mapLocationSite->name = $request->input('name');
+            $mapLocationSite->lat = $request->input('lat');
+            $mapLocationSite->lng = $request->input('lng');
+            $mapLocationSite->image = $request->input('image');
+            $mapLocationSite->video = $request->input('video');
+            $mapLocationSite->description = $request->input('description');
+            $mapLocationSite->save();
+        }
+        
+        $locations = $mapLocation::all();
+        $error = Session::get('error');
+        return view('map.siteedit', ['menu' => $this->navMenu, 
+                                     'site' => $mapLocationSite, 
+                                     'locations' => $locations,
+                                     'error' => $error]);
     }
 
     /**
@@ -93,12 +130,33 @@ class MapController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  Request  $request
+     * @return view
      */
-    public function edit($id)
+    public function editSite(Request $request)
     {
-        //
+        $mapLocationSite = MapLocationSite::where('id', $request->input('id'))->get();
+        if (count($mapLocationSite) == 0) {
+            return redirect('map/createsite')->with('error', array('type' => 'danger', 'message' => 'Can\'t found this dive site.'));
+        }
+        $mapLocation = new MapLocation();
+        if ($request->isMethod('post')) {
+            $mapLocationSite->location_id = $request->input('locationid');
+            $mapLocationSite->name = $request->input('name');
+            $mapLocationSite->lat = $request->input('lat');
+            $mapLocationSite->lng = $request->input('lng');
+            $mapLocationSite->image = $request->input('image');
+            $mapLocationSite->video = $request->input('video');
+            $mapLocationSite->description = $request->input('description');
+            $mapLocationSite->save();
+        }
+        
+        $locations = $mapLocation::all();
+        $error = Session::get('error');
+        return view('map.siteedit', ['menu' => $this->navMenu, 
+                                     'site' => $mapLocationSite, 
+                                     'locations' => $locations,
+                                     'error' => $error]);
     }
 
     /**

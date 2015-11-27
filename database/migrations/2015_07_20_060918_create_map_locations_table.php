@@ -16,7 +16,9 @@ class CreateMapLocationsTable extends Migration
             Schema::create('map_locations', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('location', 50);
+                $table->string('en_location', 50);
                 $table->string('country', 30);
+                $table->string('en_country', 30);
                 $table->timestamps();
             });
         }

@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 //Front
 Route::get('map/findall', 'MapController@findall');
-Route::get('map/createsite', 'MapController@createSite');
+Route::any('map/createsite/{address}', 'MapController@createSite');
+Route::any('map/editsite', 'MapController@editSite');
 Route::resource('map', 'MapController');
 
 

@@ -17,13 +17,13 @@ class CreateMapLocationSitesTable extends Migration
                 $table->increments('id');
                 $table->integer('location_id')->unsigned();
                 $table->string('name', 50);
+                $table->string('en_name', 50);
                 $table->decimal('lat', 9, 6);
                 $table->decimal('lng', 9, 6);
-                $table->string('deepth', 50);
-                $table->string('temperature', 50);
-                $table->string('season');
-                $table->string('visibility', 50);
+                $table->text('image');
+                $table->text('video');
                 $table->text('description');
+                $table->text('en_description');
                 $table->text('properties');
                 $table->timestamps();
             });

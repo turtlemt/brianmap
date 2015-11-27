@@ -6,8 +6,20 @@ use Route;
 
 class Menu
 {
-    protected static $menu = array(array('controller' => 'MapController', 'action' => 'findall', 'title' => 'Map', 'link' => '/map/findall', 'focus' => false),
-                                   array('controller' => 'SiteController', 'action' => 'index', 'title' => 'Country', 'link' => '/site/index', 'focus' => false),
+    protected static $menu = array(array('controller' => 'MapController', 
+                                         'action' => 'findall', 
+                                         'title' => 'Map', 
+                                         'link' => '/map/findall', 
+                                         'subtitle' => array(array('title' => 'All Sites', 'link' =>'/map/findall'),
+                                                             array('title' => 'Create Site', 'link' =>'/map/createsite'),
+                                                             array('title' => 'Edit Site', 'link' =>'/map/editsite'),
+                                                            ), 
+                                         'focus' => false),
+                                   array('controller' => 'SiteController', 
+                                         'action' => 'index', 
+                                         'title' => 'Country', 
+                                         'link' => '/site/index', 
+                                         'focus' => false),
                                    );
     /**
      * Get controller and action

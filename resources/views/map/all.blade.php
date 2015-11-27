@@ -36,23 +36,22 @@
                 <?php
                 foreach ($locations as $location) :
                     $sites = $location->mapLocationSite;
-                    foreach ($sites as $site) :
                 ?>
-                        var lat = <?php echo $site->lat;?>;
-                        var lng = <?php echo $site->lng;?>;
-                        var mapOptions = {
-                            center: new google.maps.LatLng(lat, lng),
-                            zoom: 8,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-                        var marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(lat, lng), map: map, title: '<?php echo $site->name;?>'
-                        });   
-                <?php
-                    endforeach;
-                endforeach;
-                ?>
+                    var mapOptions = {
+                        center: new google.maps.LatLng(<?php echo $sites[0]->lat;?>, <?php echo $sites[0]->lng;?>),
+                        zoom: 11,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                        <?php foreach ($sites as $site) :?>
+                            var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(<?php echo $site->lat;?>, <?php echo $site->lng;?>), map: map, title: '<?php echo $site->name;?>' });  
+                            marker.addListener('click', function() {
+                                window.location = "/map/engname";
+                            });
+                        <?php endforeach;?>
+                   
+                <?php endforeach;?>
             }
 
             /*public double GetDistance(double Lat1, double Long1, double Lat2, double Long2)
