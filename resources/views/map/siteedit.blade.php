@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-7  grid-row-buffer">
                     <label for="price">Image: </label>
-                    <input type="text" class="form-control" name="image" value="<?php echo $site->image;?>" />
+                    <input type="text" class="form-control" name="photo_set" value="<?php echo $site->photo_set;?>" />
                 </div>
                 <div class="col-md-7  grid-row-buffer">
                     <label for="price">Video: </label>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\Menu;
+use App\Http\Helpers\FlickrHelper;
 use Session;
 
 use App\Http\Models\MapLocationSite;
@@ -72,7 +73,7 @@ class MapController extends Controller
             $mapLocationSite->name = $request->input('name');
             $mapLocationSite->lat = $request->input('lat');
             $mapLocationSite->lng = $request->input('lng');
-            $mapLocationSite->image = $request->input('image');
+            $mapLocationSite->photo_set = $request->input('photo_set');
             $mapLocationSite->video = $request->input('video');
             $mapLocationSite->description = $request->input('description');
             $mapLocationSite->save();
@@ -101,12 +102,16 @@ class MapController extends Controller
         }
         $mapLocation = new MapLocation();
         $location = $mapLocation::where('id', $mapLocationSite->location_id)->first();
+        
+        
+        
         $error = Session::get('error');
         return view('map.site', ['menu' => $this->navMenu, 
                                  'title' => $this->title,
                                  'googleapikey' => config('siteconfig.googleapiKey'),
                                  'site' => $mapLocationSite, 
                                  'location' => $location,
+                                 'imageList' => explode(',', $mapLocationSite->image_list), 
                                  'error' => $error]);
     }
 
@@ -135,11 +140,14 @@ class MapController extends Controller
         }
         $mapLocation = new MapLocation();
         if ($request->isMethod('post')) {
+            if ($mapLocationSite->photo_set != $request->input('photo_set')) {
+                $mapLocationSite->photo_set = $request->input('photo_set');
+                $mapLocationSite->image_list = FlickrHelper::getFlickPhotosByPhotoset($request->input('photo_set'), 'Medium', 6);
+            }
             $mapLocationSite->location_id = $request->input('locationid');
             $mapLocationSite->name = $request->input('name');
             $mapLocationSite->lat = $request->input('lat');
             $mapLocationSite->lng = $request->input('lng');
-            $mapLocationSite->image = $request->input('image');
             $mapLocationSite->video = $request->input('video');
             $mapLocationSite->description = $request->input('description');
             $mapLocationSite->save();

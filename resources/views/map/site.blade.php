@@ -12,10 +12,7 @@
 <div class="row">
     <div class="col-md-12 well grid-buffer">
         <div class="row">
-            <div class="col-md-12  grid-row-buffer">
-                <label for="name">{{$site->name}} ({{$location->location}} {{$location->country}})</label>
-            </div>
-            <div class="col-md-12  grid-row-buffer">
+            <div class="col-md-12 grid-row-buffer">
                 <div id="map_canvas" style="height:500px"></div>
                 <script type="text/javascript">
                     function initialize()
@@ -32,30 +29,27 @@
                     initialize();
                 </script>
             </div>
-            <div class="col-md-7  grid-row-buffer">
-                <label for="price">Lat: </label>
-                <input type="text" class="form-control" name="lat" value="<?php echo $site->lat;?>" />
+            <div class="col-md-12 grid-row-buffer margin-top-30">
+                <label for="name">{{$site->name}} ({{$location->location}} {{$location->country}})</label>
             </div>
-            <div class="col-md-7  grid-row-buffer">
-                <label for="price">Lng: </label>
-                <input type="text" class="form-control" name="lng" value="<?php echo $site->lng;?>" />
-            </div>
-            <div class="col-md-7  grid-row-buffer">
-                <label for="price">Image: </label>
-                <input type="text" class="form-control" name="image" value="<?php echo $site->image;?>" />
-            </div>
-            <div class="col-md-7  grid-row-buffer">
-                <label for="price">Video: </label>
-                <input type="text" class="form-control" name="video" value="<?php echo $site->video;?>" />
-            </div>
-            <div class="col-md-7  grid-row-buffer">
+            <div class="col-md-5 grid-row-buffer margin-top-30">
                 <label for="price">Description: </label>
-                <textarea class="form-control" rows="5" name="description"><?php echo $site->description;?></textarea>
+                <p>{{$site->description}}</p>
             </div>
-            <div class="pull-right">
-                <button class="btn btn-success" name="submit_btn" value="merge">Save</button>
+            <div class="col-md-7 grid-row-buffer margin-top-30">
+                <iframe width="560" height="315" src="{{$site->video}}" frameborder="0" allowfullscreen></iframe>
             </div>
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            
+            <div class="col-md-12 grid-row-buffer margin-top-15">
+                <label for="flick_link"><a target="_blank" href="{{$site->image}}">All Photos</a></label>
+            </div>
+            
+            @foreach ($imageList as $image)
+            <div class="col-md-6 grid-row-buffer margin-top-30 text-left">
+                <img src="{{$image}}" style="height: 375px;"/>
+            </div>
+            @endforeach
+            
         </div>
     </div>
 </div>

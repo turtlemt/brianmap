@@ -20,7 +20,8 @@ class CreateMapLocationSitesTable extends Migration
                 $table->string('en_name', 50);
                 $table->decimal('lat', 9, 6);
                 $table->decimal('lng', 9, 6);
-                $table->text('image');
+                $table->text('photo_set');
+                $table->text('image_list');
                 $table->text('video');
                 $table->text('description');
                 $table->text('en_description');
