@@ -31,6 +31,11 @@ Route::group(['prefix' => 'mapback', 'middleware' => 'auth.basic'], function () 
     Route::resource('map', 'MapController');
 });
 
+// Authentication routes...
+Route::any('user/login', 'UserController@login');
+Route::any('user/logout', 'UserController@logout');
+Route::any('user/register', 'UserController@register');
+
 
 //Api
 /*Route::group(['prefix' => 'api', 'middleware' => 'ApiAuth'], function () {

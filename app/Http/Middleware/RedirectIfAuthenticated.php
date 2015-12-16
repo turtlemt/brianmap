@@ -34,9 +34,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            return redirect('/home');
-        }
+        /*if ($this->auth->check()) {
+            return redirect('/map/findall');
+        }*/
 
         return $next($request);
     }

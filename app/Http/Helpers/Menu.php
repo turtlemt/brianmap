@@ -3,6 +3,7 @@
 namespace App\Http\Helpers;
 
 use Route;
+use Auth;
 
 class Menu
 {
@@ -12,14 +13,25 @@ class Menu
                                          'link' => '/map/findall', 
                                          'subtitle' => array(array('title' => 'All Sites', 'action' => 'findall', 'link' =>'/map/findall'),
                                                              array('title' => 'Create Site', 'action' => 'createsite', 'link' =>'/map/createsite'),
-                                                             array('title' => 'Edit Site', 'action' => 'editsite', 'link' =>'/map/editsite'),
                                                              array('title' => 'Site', 'action' => 'site', 'link' =>'/map/site'),
                                                             ), 
                                          'focus' => false),
-                                   array('controller' => 'SiteController', 
+                                   array('controller' => 'MapController', 
                                          'action' => 'index', 
                                          'title' => 'Country', 
-                                         'link' => '/site/index', 
+                                         'link' => '/map/index', 
+                                         'focus' => false),
+                                   );
+    
+    protected static $publicMenu = array(array('controller' => 'MapController', 
+                                         'action' => 'findall', 
+                                         'title' => 'All Sites', 
+                                         'link' => '/map/findall', 
+                                         'focus' => false),
+                                         array('controller' => 'MapController', 
+                                         'action' => 'index', 
+                                         'title' => 'Site List', 
+                                         'link' => '/map/country', 
                                          'focus' => false),
                                    );
     
@@ -44,18 +56,28 @@ class Menu
      */
     public static function getMenu()
     {
+        if (Auth::check()) {
+            $menu = self::$menu;
+        } else {
+            $menu = self::$publicMenu;
+        }
         $segment = self::processAction();
-        foreach (self::$menu as $key => $element) {
-            if ($element['controller'] == $segment[0] ) {
-                foreach ($element['subtitle'] as $subtitle) {
-                    if ($subtitle['action'] == strtolower($segment[1])) {
-                        self::$menu[$key]['focus'] = true;
-                        self::$title = $subtitle['title'];
+        foreach ($menu as $key => $element) {
+            if ($element['controller'] == $segment[0] && $element['action'] == $segment[1]) {
+                $menu[$key]['focus'] = true;
+                /*if (isset($element['subtitle'])) {
+                    foreach ($element['subtitle'] as $subtitle) {
+                        if ($subtitle['action'] == strtolower($segment[1])) {
+                            $menu[$key]['focus'] = true;
+                            self::$title = $subtitle['title'];
+                        }
                     }
-                }
+                } else {
+                    $menu[$key]['focus'] = true;
+                }*/
             }
         }
-        return self::$menu;
+        return $menu;
     }
     
     /**
