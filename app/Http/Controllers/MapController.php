@@ -48,14 +48,16 @@ class MapController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
+     * Show list of 
      *
      * @return Response
      */
-    public function index()
+    public function country()
     {
-        //
-        echo 'this is map index';
+        //$mapLocationSite = new MapLocationSite();
+        $mapLocation = new MapLocation();
+        $locations = $mapLocation::all();
+        return view('map.country', ['menu' => $this->navMenu, 'locations' => $locations]);
     }
 
     /**

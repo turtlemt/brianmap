@@ -6,7 +6,7 @@
 @section('content')
 <div class="alert alert-<?php echo $error['type'];?>" role="alert"><?php echo $error['message'];?></div>
 
-<form class="well" method="post">
+<form method="post">
     <div class="row">
         <div class="col-md-12 well grid-buffer">
             <div class="row">
@@ -49,7 +49,7 @@
                     <label for="price">Description: </label>
                     <textarea class="form-control" rows="5" name="description"><?php echo $site->description;?></textarea>
                 </div>
-                <div class="pull-right">
+                <div class="col-md-12 margin-top-15">
                     <button class="btn btn-success" name="submit_btn" value="merge">Save</button>
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

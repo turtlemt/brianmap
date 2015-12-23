@@ -31,6 +31,9 @@
             </div>
             <div class="col-md-12 grid-row-buffer margin-top-30">
                 <label for="name">{{$site->name}} ({{$location->location}} {{$location->country}})</label>
+                @if (Auth::check())
+                    <a href="/map/editsite/{{$site->id}}" target="_self"><button type="button" class="btn btn-primary">Edit</button></a>
+                @endif
             </div>
             <div class="col-md-5 grid-row-buffer margin-top-30">
                 <label for="price">Description: </label>
@@ -41,7 +44,7 @@
             </div>
             
             <div class="col-md-12 grid-row-buffer margin-top-15">
-                <label for="flick_link"><a target="_blank" href="{{$site->image}}">All Photos</a></label>
+                <label for="flick_link"><a target="_blank" href="{{$site->photo_set}}">All Photos</a></label>
             </div>
             
             @foreach ($imageList as $image)
