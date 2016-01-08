@@ -24,7 +24,6 @@ Route::any('map/site/{id}', 'MapController@site');
 Route::resource('map', 'MapController');
 
 
-
 //Back
 Route::group(['prefix' => 'mapback', 'middleware' => 'auth.basic'], function () {
     

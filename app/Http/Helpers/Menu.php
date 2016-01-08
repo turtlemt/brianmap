@@ -4,6 +4,7 @@ namespace App\Http\Helpers;
 
 use Route;
 use Auth;
+use Request;
 
 class Menu
 {
@@ -62,9 +63,11 @@ class Menu
             $menu = self::$publicMenu;
         }
         $segment = self::processAction();
+        $isAllow = false;
         foreach ($menu as $key => $element) {
             if ($element['controller'] == $segment[0] && $element['action'] == $segment[1]) {
                 $menu[$key]['focus'] = true;
+                $isAllow = true;
                 /*if (isset($element['subtitle'])) {
                     foreach ($element['subtitle'] as $subtitle) {
                         if ($subtitle['action'] == strtolower($segment[1])) {
@@ -76,6 +79,10 @@ class Menu
                     $menu[$key]['focus'] = true;
                 }*/
             }
+        }
+        
+        if (!$isAllow) {
+            redirect()->action('MapController@findall')->with('error', array('type' => 'danger', 'message' => 'Error url.'))->send();
         }
         return $menu;
     }

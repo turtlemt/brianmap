@@ -18,7 +18,7 @@ class MapController extends Controller
     protected $navMenu = '';
     protected $title = '';
     
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->navMenu = Menu::getMenu();
         $this->title = Menu::getTitle();
