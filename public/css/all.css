@@ -1,0 +1,19 @@
+.title-container { 
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.title-container .logo a {
+    font: bold 39px Roboto;
+    color: #51545C;
+    letter-spacing: -.03em;
+}
+
+.margin-top-15{
+    margin-top: 15px;
+}
+
+.margin-top-30{
+    margin-top: 30px;
+}
